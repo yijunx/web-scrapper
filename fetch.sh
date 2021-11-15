@@ -1,0 +1,17 @@
+curl 'https://www.hermes.com/sg/en/category/women/bags-and-small-leather-goods/bags-and-clutches/' \
+  -H 'authority: www.hermes.com' \
+  -H 'cache-control: max-age=0' \
+  -H 'sec-ch-ua: "Google Chrome";v="93", " Not;A Brand";v="99", "Chromium";v="93"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'sec-fetch-site: none' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'sec-fetch-dest: document' \
+  -H 'accept-language: en-GB,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-TW;q=0.6,zh;q=0.5' \
+  -H 'cookie: _gid=GA1.2.1931154062.1636981860; _fbp=fb.1.1636981859669.1621585377; ECOM_SESS=v3s8m91vcik3smflpilihrrg67; correlation_id=e4e7d7419c68e160f1843ea74cb539ac459116faeb1374980d4fc9de9f5d7f08; _cs_mk=0.9495708899134336_1636983716183; _ga=GA1.2.906334706.1636981860; _ga_Y862HCHCQ7=GS1.1.1636983716.2.1.1636986040.0; datadome=aSYoLEEsz2GNZRtk77-Nvtq0COdtv-arYP7oC~oje-kaN3LXFJXcy-.yfnYnLBlDDTG1NhVJhO4IwgAQfimos2HGBTXedXVbXIN-a0.7AL' \
+  -H 'if-none-match: W/"6c49d-Vpo8i20T7eRgXR08h+pYvV5smlo"' \
+  --compressed > test.html
