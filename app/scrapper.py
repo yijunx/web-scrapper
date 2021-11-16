@@ -8,6 +8,8 @@ import requests
 
 session = requests.Session()
 
+# well scrapper failed but curl works
+
 
 class AppURLopener(FancyURLopener):
     # version = "Mozilla/5.0"
@@ -56,6 +58,8 @@ def scrap():
     
     # response = session.get(url, headers={"User-Agent":"gozilla4.3"})
     # print(response.status_code)
+
+
 
 
 if __name__ == "__main__":
