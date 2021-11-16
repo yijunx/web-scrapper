@@ -31,14 +31,11 @@ def scrap():
         for div_name, child_loc in walk_div_maze:
             soup = [e for e in soup.children if e.name == div_name][child_loc]
 
+        # take a peak at next level (NICE!)
+        # print([e.text for e in soup.children if e.name is not None][0])
 
-        # take a peak at next level
-        items = [e for e in soup.children if e.name == "li"]
-
-        print(first_stuff.name)
-        print(first_stuff.text)
-        print()
-
+        item_strings = [e.text for e in soup.children if e.name == "li"]
+    return item_strings
 
 
 if __name__ == "__main__":
