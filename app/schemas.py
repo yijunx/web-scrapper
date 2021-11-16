@@ -1,9 +1,9 @@
-from pydantic import BaseModel, BaseSettings
+from pydantic import BaseModel
 
 
-class Config(BaseSettings):
-    SENDGRID_API_KEY: str
-    SCRAPPING_URL: str
+class Item(BaseModel):
+    item_name: str
+    item_color: str
+    item_price_quantity: float
+    item_price_currency: str
 
-
-conf = Config()
