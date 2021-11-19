@@ -1,12 +1,10 @@
-import pandas as pd
-import numpy as np
 from bs4 import BeautifulSoup
-import re
-import os
+
 
 
 def scrap():
-    with open("test.html", "r") as f:
+    print("scrapping")
+    with open("to_parse.html", "r") as f:
         contents = f.read()
         soup = BeautifulSoup(contents, features="html.parser")
         soup = soup.body

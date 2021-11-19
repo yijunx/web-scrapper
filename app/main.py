@@ -1,6 +1,7 @@
 import time
 from scrapper import scrap
 from schemas import Item
+import subprocess
 
 
 # here is some nasty glocal vars...
@@ -29,14 +30,19 @@ def parse_string_into_item(
         )
     except ValueError:
         return None
+
+    
+def pull():
+    print("pulling")
+    subprocess.run(["bash", "app/fetch.sh"]) 
+    pass
     
 
-
-def main():
+def start():
     # run the script to pull to index html
+    pull()
 
     # get contents from html
-    print("scrapping")
     web_items = scrap()
     items = [parse_string_into_item(x) for x in web_items]
     item_dict = {}
@@ -44,15 +50,14 @@ def main():
         if item is not None and item.item_name not in item_dict:
             item_dict[item.item_name] = item.dict()
     
-    for k, v in item_dict.items():
-        print(k)
-        print(v)
-        print()
-
+    # for k, v in item_dict.items():
+    #     print(k)
+    #     print(v)
+    #     print()
 
 
 if __name__ == "__main__":
-    main()
+    start()
     # while True:
     #     main()
     #     # need to run the bash script
