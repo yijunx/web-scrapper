@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 
 
-def scrap():
-    print("scrapping")
-    with open("to_parse.html", "r") as f:
+def scrap(html_path: str):
+    print(f"Scrapping {html_path}")
+    with open(html_path, "r") as f:
         contents = f.read()
         soup = BeautifulSoup(contents, features="html.parser")
         soup = soup.body

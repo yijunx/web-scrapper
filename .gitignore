@@ -129,7 +129,10 @@ dmypy.json
 .pyre/
 
 # the html
-to_parse.html
+to_parse_sg.html
+to_parse_hk.html
+to_parse_fr.html
+to_parse_uk.html
 
 # personal notes
 notes.md

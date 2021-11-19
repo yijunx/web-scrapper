@@ -5,12 +5,17 @@ import subprocess
 import os
 from email_handler import send_email_alert
 from datetime import datetime
-from typing import Dict
+from typing import Dict, List
 
 
-# here is some nasty glocal vars...
 RUN: int = 0
 CURRENT_SET_OF_ITEMS: dict = {}
+HTML_PATHS: List[str] = [
+    "to_parse_sg.html",
+    "to_parse_hk.html",
+    "to_parse_fr.html",
+    "to_parse_uk.html"
+]
 
 
 def parse_string_into_item(list_item_text: str) -> Item:
@@ -57,17 +62,20 @@ def start():
     # run the script to pull to index html
     global RUN
     global CURRENT_SET_OF_ITEMS
+
+    # this pull, pulls all html files 
     pull()
 
     # get contents from html
-    web_items = scrap()
-    items = [parse_string_into_item(x) for x in web_items]
-    lastest_set_of_items = {}
-    for item in items:
-        if item is not None and item.item_name not in lastest_set_of_items:
-            lastest_set_of_items[item.item_name] = item
+    for html_path in HTML_PATHS:
+        web_items = scrap(html_path)
+        items = [parse_string_into_item(x) for x in web_items]
+        lastest_set_of_items = {}
+        for item in items:
+            if item is not None and item.item_name not in lastest_set_of_items:
+                lastest_set_of_items[item.item_name] = item
 
-    compare(was_dict=CURRENT_SET_OF_ITEMS, is_dict=lastest_set_of_items)
+        compare(was_dict=CURRENT_SET_OF_ITEMS, is_dict=lastest_set_of_items)
 
     # for k, v in lastest_set_of_items.items():
     #     print(k)
