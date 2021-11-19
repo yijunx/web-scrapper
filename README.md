@@ -13,5 +13,8 @@
     export CLIENT_EMAILS='email1@xx.com,email2@xx.com'
     export INTERNAL_IN_SECONDS='5'
 
-    # at last
-    bash start.sh
+    # the start_dev.sh will use the .env file to get the env vars
+    bash start_dev.sh
+
+    # to use in the prod env, or docker_run, use
+    bash start_prod.sh

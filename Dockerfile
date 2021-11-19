@@ -10,8 +10,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 8000
-
-CMD ["bash", "start.sh"]
+CMD ["bash", "start_prod.sh"]
 
 

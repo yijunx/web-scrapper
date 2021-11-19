@@ -130,3 +130,9 @@ dmypy.json
 
 # the html
 to_parse.html
+
+# personal notes
+notes.md
+
+# secret
+secret.env

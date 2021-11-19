@@ -1,5 +1,4 @@
 #!/bin/bash -e
 
-
-source ./.env
+# requires env vars
 python app/main.py
