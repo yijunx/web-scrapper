@@ -6,4 +6,3 @@ class Item(BaseModel):
     item_color: str
     item_price_quantity: str
     item_price_currency: str
-

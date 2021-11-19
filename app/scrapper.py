@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 
 
-
 def scrap():
     print("scrapping")
     with open("to_parse.html", "r") as f:
@@ -20,10 +19,10 @@ def scrap():
             ("div", 0),
             ("h-grid-page", 0),
             ("div", 0),
-            ("div", 2), # now we going into the grid
+            ("div", 2),  # now we going into the grid
             ("div", 0),
             ("h-grid-results", 0),
-            ("ul", 0)  # under ul we have li!!!!
+            ("ul", 0),  # under ul we have li!!!!
         ]
 
         for div_name, child_loc in walk_div_maze:
