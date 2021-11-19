@@ -4,6 +4,8 @@ from schemas import Item
 import subprocess
 import os
 from email_handler import send_email_alert
+from datetime import datetime
+from typing import Dict
 
 
 # here is some nasty glocal vars...
@@ -16,7 +18,7 @@ def parse_string_into_item(list_item_text: str) -> Item:
     list_item_text: "Cabas H en Biais 40 bag, Color:  pink ,  S$ 5,000"
     """
     # update to normal space first
-    list_item_text = list_item_text.replace(u"\xa0", u" ")
+    list_item_text = list_item_text.replace("\xa0", " ")
     try:
         name_part, color_part, price_part = list_item_text.split(", ")
         color = color_part.split(":")[1]
@@ -35,19 +37,20 @@ def parse_string_into_item(list_item_text: str) -> Item:
 def pull():
     print("pulling")
     subprocess.run(["bash", "app/fetch.sh"])
-    pass
 
 
-def compare(was_dict, is_dict):
+def compare(was_dict: Dict[str, Item], is_dict: Dict[str, Item]):
     if RUN == 0:
         # well it is first run... just pass
-        pass
-
-    new_item_names = [x for x in is_dict if x not in was_dict]
-    new_items = [is_dict[x] for x in new_item_names]
-    if new_items:
-        print("GOT NEW ITEMS TO SEND!!!!")
-        send_email_alert(items=new_items)
+        print("FIRST RUN!!")
+    else:
+        new_item_names = [x for x in is_dict if x not in was_dict]
+        new_items = [is_dict[x] for x in new_item_names]
+        if new_items:
+            print("GOT NEW ITEMS TO SEND!!!!")
+            send_email_alert(items=new_items)
+        else:
+            print("NOTHING TO SEND!!!")
 
 
 def start():
@@ -62,7 +65,7 @@ def start():
     lastest_set_of_items = {}
     for item in items:
         if item is not None and item.item_name not in lastest_set_of_items:
-            lastest_set_of_items[item.item_name] = item.dict()
+            lastest_set_of_items[item.item_name] = item
 
     compare(was_dict=CURRENT_SET_OF_ITEMS, is_dict=lastest_set_of_items)
 
@@ -77,6 +80,7 @@ def start():
 
 if __name__ == "__main__":
     while True:
+        print(f"====== Starting a run on {datetime.now()} ======")
         start()
         # need to run the bash script
         time.sleep(int(os.getenv("INTERNAL_IN_SECONDS")))
