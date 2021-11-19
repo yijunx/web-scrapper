@@ -2,6 +2,8 @@ import time
 from scrapper import scrap
 from schemas import Item
 import subprocess
+import os
+from email_handler import send_email_alert
 
 
 # here is some nasty glocal vars...
@@ -41,14 +43,17 @@ def compare(was_dict, is_dict):
         # well it is first run... just pass
         pass
 
-    # email is triggered here based on the difference in the
-    # was dict and is_dict
-    # and we need a list of client
-    return
+    new_item_names = [x for x in is_dict if x not in was_dict]
+    new_items = [is_dict[x] for x in new_item_names]
+    if new_items:
+        print("GOT NEW ITEMS TO SEND!!!!")
+        send_email_alert(items=new_items)
 
 
 def start():
     # run the script to pull to index html
+    global RUN
+    global CURRENT_SET_OF_ITEMS
     pull()
 
     # get contents from html
@@ -61,13 +66,10 @@ def start():
 
     compare(was_dict=CURRENT_SET_OF_ITEMS, is_dict=lastest_set_of_items)
 
-    for k, v in lastest_set_of_items.items():
-        print(k)
-        print(v)
-        print()
-
-    global RUN
-    global CURRENT_SET_OF_ITEMS
+    # for k, v in lastest_set_of_items.items():
+    #     print(k)
+    #     print(v)
+    #     print()
 
     RUN += 1
     CURRENT_SET_OF_ITEMS = lastest_set_of_items
@@ -77,4 +79,4 @@ if __name__ == "__main__":
     while True:
         start()
         # need to run the bash script
-        time.sleep(4)
+        time.sleep(int(os.getenv("INTERNAL_IN_SECONDS")))
