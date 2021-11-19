@@ -2,3 +2,4 @@ pydantic
 beautifulsoup4
 numpy
 pandas
+pydantic

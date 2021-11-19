@@ -36,6 +36,17 @@ def pull():
     pass
 
 
+def compare(was_dict, is_dict):
+    if RUN == 0:
+        # well it is first run... just pass
+        pass
+
+    # email is triggered here based on the difference in the
+    # was dict and is_dict
+    # and we need a list of client
+    return
+
+
 def start():
     # run the script to pull to index html
     pull()
@@ -43,20 +54,27 @@ def start():
     # get contents from html
     web_items = scrap()
     items = [parse_string_into_item(x) for x in web_items]
-    item_dict = {}
+    lastest_set_of_items = {}
     for item in items:
-        if item is not None and item.item_name not in item_dict:
-            item_dict[item.item_name] = item.dict()
+        if item is not None and item.item_name not in lastest_set_of_items:
+            lastest_set_of_items[item.item_name] = item.dict()
 
-    # for k, v in item_dict.items():
-    #     print(k)
-    #     print(v)
-    #     print()
+    compare(was_dict=CURRENT_SET_OF_ITEMS, is_dict=lastest_set_of_items)
+
+    for k, v in lastest_set_of_items.items():
+        print(k)
+        print(v)
+        print()
+
+    global RUN
+    global CURRENT_SET_OF_ITEMS
+
+    RUN += 1
+    CURRENT_SET_OF_ITEMS = lastest_set_of_items
 
 
 if __name__ == "__main__":
-    start()
-    # while True:
-    #     main()
-    #     # need to run the bash script
-    #     time.sleep(4)
+    while True:
+        start()
+        # need to run the bash script
+        time.sleep(4)
