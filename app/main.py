@@ -50,15 +50,15 @@ def parse_string_into_item(list_item_text: str) -> Item:
     try:
         name_part, color_part, price_part = list_item_text.split(", ")
         color = color_part.split(":")[1]
-        currency, quantity = price_part.strip().split(" ")
 
         return Item(
-            item_name=name_part.strip(),
-            item_color=color.strip(),
-            item_price_quantity=quantity.strip(),
-            item_price_currency=currency.strip(),
+            name=name_part.strip(),
+            color=color.strip(),
+            price=price_part.strip(),
         )
-    except ValueError:
+    except ValueError as e:
+        print(f"THERE IS VALUE ERROR IN PARSING STRING {list_item_text}")
+        print(str(e))
         return None
 
 
@@ -71,7 +71,7 @@ def compare(is_dict: Dict[str, Item], was_dict: Dict[str, Item] = None) -> List[
     if was_dict is None:
         # well it is first run... just pass
         print("FIRST RUN!!")
-        return [is_dict[x] for x in is_dict]  # []
+        return []
     else:
         new_item_names = [x for x in is_dict if x not in was_dict]
         new_items = [is_dict[x] for x in new_item_names]
@@ -88,6 +88,8 @@ def start():
     # get contents from html
     new_items_of_locations = NewItemsOfLocations(data=[])
 
+    need_to_send = False
+
     for location_info in LOCATIONS_INFO.data:
         web_items = scrap(
             html_path=location_info.html_path, location=location_info.location
@@ -97,15 +99,22 @@ def start():
         for item in items:
             if (
                 item is not None
-                and item.item_name not in lastest_set_of_items_of_location
+                and item.name not in lastest_set_of_items_of_location
             ):
-                lastest_set_of_items_of_location[item.item_name] = item
+                lastest_set_of_items_of_location[item.name] = item
 
         new_items_of_location = compare(
             was_dict=CURRENT_SET_OF_ITEMS.get(location_info.location, None),
             is_dict=lastest_set_of_items_of_location,
         )
 
+        if new_items_of_location:
+            need_to_send = True
+        else:
+            print(f"THERE ARE NEW STUFF ON {location_info.location} !!!")
+            print(f"THEY ARE:")
+            print(new_items_of_location)
+            print()
         new_items_of_locations.data.append(
             NewItemsOfLocation(
                 location=location_info.location,
@@ -116,8 +125,10 @@ def start():
 
         CURRENT_SET_OF_ITEMS[location_info.location] = lastest_set_of_items_of_location
 
-    print(new_items_of_locations)
-    # send_email_alert(new_items_of_locations=new_items_of_locations)
+    if need_to_send:
+        send_email_alert(new_items_of_locations=new_items_of_locations)
+    else:
+        print("NOTHING NEW, NEW NEED TO SEND")
 
 
 if __name__ == "__main__":

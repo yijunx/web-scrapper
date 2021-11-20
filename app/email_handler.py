@@ -15,19 +15,20 @@ def send_email_alert(
 
     for new_items_of_location in new_items_of_locations.data:
 
-        main_stuff += f"""
-        new stuff for location {new_items_of_location.location} <br>
-        which can be found in url {new_items_of_location.url} <br>
-        """
-
-        for item in new_items_of_location.items:
+        if new_items_of_location.items:
             main_stuff += f"""
-            <br>
-            <p>Item Name: {item.item_name}</p>
-            <p>Item Color: {item.item_color}</p>
-            <p>Item Price: {item.item_price_currency} {item.item_price_quantity}</p>
-            <br>
+            new stuff for location <b>{new_items_of_location.location.upper()}</b> <br>
+            which can be found in url {new_items_of_location.url} <br>
             """
+
+            for item in new_items_of_location.items:
+                main_stuff += f"""
+                <br>
+                <p>Item Name: {item.name}</p>
+                <p>Item Color: {item.color}</p>
+                <p>Item Price: {item.price}</p>
+                <br>
+                """
 
     to_emails = to_emails or os.getenv("CLIENT_EMAILS").split(",")
 
@@ -40,8 +41,6 @@ def send_email_alert(
         <p>HIHIHIHI,</p>
         <br>
         <br>
-        <p>new stuff on {os.getenv("SCRAPPING_URL")} </p>
-
         {main_stuff}
         
         """,
