@@ -57,8 +57,8 @@ def parse_string_into_item(list_item_text: str) -> Item:
             price=price_part.strip(),
         )
     except ValueError as e:
-        print(f"THERE IS VALUE ERROR IN PARSING STRING {list_item_text}")
-        print(str(e))
+        # print(f"THERE IS VALUE ERROR IN PARSING STRING {list_item_text}")
+        # print(str(e))
         return None
 
 
@@ -70,7 +70,7 @@ def pull():
 def compare(is_dict: Dict[str, Item], was_dict: Dict[str, Item] = None) -> List[Item]:
     if was_dict is None:
         # well it is first run... just pass
-        print("FIRST RUN!!")
+        # print("FIRST RUN!!")
         return []
     else:
         new_item_names = [x for x in is_dict if x not in was_dict]
@@ -107,10 +107,10 @@ def start():
 
         if new_items_of_location:
             need_to_send = True
-            print(f"THERE ARE NEW STUFF ON {location_info.location} !!!")
-            print(f"THEY ARE:")
-            print(new_items_of_location)
-            print()
+            # print(f"THERE ARE NEW STUFF ON {location_info.location} !!!")
+            # print(f"THEY ARE:")
+            # print(new_items_of_location)
+            # print()
         new_items_of_locations.data.append(
             NewItemsOfLocation(
                 location=location_info.location,
@@ -123,8 +123,8 @@ def start():
 
     if need_to_send:
         send_email_alert(new_items_of_locations=new_items_of_locations)
-    else:
-        print("NOTHING NEW, NO NEED TO SEND")
+    # else:
+    #     print("NOTHING NEW, NO NEED TO SEND")
 
 
 if __name__ == "__main__":

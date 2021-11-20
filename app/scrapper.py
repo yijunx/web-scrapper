@@ -34,7 +34,13 @@ def scrap(html_path: str, location: str, debug_mode: bool = False):
             walk_div_maze = default_maze_walker
 
         for div_name, child_loc in walk_div_maze:
-            soup = [e for e in soup.children if e.name == div_name][child_loc]
+            try:
+                soup = [e for e in soup.children if e.name == div_name][child_loc]
+            except Exception as e:
+                print(str(e))
+                print("the elements is...")
+                print([e.name for e in soup.children if e.name is not None])
+                return []
 
         # take a peak at next level (NICE!)
         if debug_mode:
