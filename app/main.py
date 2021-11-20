@@ -107,7 +107,6 @@ def start():
 
         if new_items_of_location:
             need_to_send = True
-        else:
             print(f"THERE ARE NEW STUFF ON {location_info.location} !!!")
             print(f"THEY ARE:")
             print(new_items_of_location)
@@ -125,7 +124,7 @@ def start():
     if need_to_send:
         send_email_alert(new_items_of_locations=new_items_of_locations)
     else:
-        print("NOTHING NEW, NEW NEED TO SEND")
+        print("NOTHING NEW, NO NEED TO SEND")
 
 
 if __name__ == "__main__":
