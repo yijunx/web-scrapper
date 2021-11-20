@@ -1,4 +1,4 @@
 #!/bin/bash -e
 clear
-source ./url.env
+source ./urls.env
 python app/main.py

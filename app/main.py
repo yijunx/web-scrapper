@@ -97,10 +97,7 @@ def start():
         items = [parse_string_into_item(x) for x in web_items]
         lastest_set_of_items_of_location = {}
         for item in items:
-            if (
-                item is not None
-                and item.name not in lastest_set_of_items_of_location
-            ):
+            if item is not None and item.name not in lastest_set_of_items_of_location:
                 lastest_set_of_items_of_location[item.name] = item
 
         new_items_of_location = compare(
