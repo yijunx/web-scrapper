@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-
-source ./url.env
+clear
+source ./urls.env
 source ./secret.env
 python app/main.py

@@ -1,13 +1,12 @@
 import time
-from app.schemas import (
-    InfoForEmail,
+from schemas import (
     LocationInfo,
     LocationsInfo,
     NewItemsOfLocation,
     NewItemsOfLocations,
 )
 from scrapper import scrap
-from schemas import Item, NewItemsOfUrl
+from schemas import Item
 import subprocess
 import os
 from email_handler import send_email_alert
@@ -72,7 +71,7 @@ def compare(is_dict: Dict[str, Item], was_dict: Dict[str, Item] = None) -> List[
     if was_dict is None:
         # well it is first run... just pass
         print("FIRST RUN!!")
-        return []
+        return [is_dict[x] for x in is_dict]  # []
     else:
         new_item_names = [x for x in is_dict if x not in was_dict]
         new_items = [is_dict[x] for x in new_item_names]
@@ -83,14 +82,16 @@ def start():
     # run the script to pull to index html
     global CURRENT_SET_OF_ITEMS
 
-    # this pull, pulls all html files
+    # this pull, pulls all html files of all location
     pull()
 
     # get contents from html
-    new_items_of_locations = NewItemsOfLocations()
+    new_items_of_locations = NewItemsOfLocations(data=[])
 
     for location_info in LOCATIONS_INFO.data:
-        web_items = scrap(location_info.html_path)
+        web_items = scrap(
+            html_path=location_info.html_path, location=location_info.location
+        )
         items = [parse_string_into_item(x) for x in web_items]
         lastest_set_of_items_of_location = {}
         for item in items:
@@ -115,7 +116,8 @@ def start():
 
         CURRENT_SET_OF_ITEMS[location_info.location] = lastest_set_of_items_of_location
 
-    send_email_alert(new_items_of_locations=new_items_of_locations)
+    print(new_items_of_locations)
+    # send_email_alert(new_items_of_locations=new_items_of_locations)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
 #!/bin/bash -e
-
-# requires env vars
+clear
+source ./url.env
 python app/main.py
