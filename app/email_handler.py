@@ -4,21 +4,30 @@ import os
 from typing import List
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from schemas import Item
+from schemas import NewItemsOfLocations
 
 
-def send_email_alert(items: List[Item], to_emails: List[str] = None):
+def send_email_alert(
+    new_items_of_locations: NewItemsOfLocations, to_emails: List[str] = None
+):
 
     main_stuff = ""
 
-    for item in items:
+    for new_items_of_location in new_items_of_locations.data:
+
         main_stuff += f"""
-        <br>
-        <br>
-        <p>Item Name: {item.item_name}</p>
-        <p>Item Color: {item.item_color}</p>
-        <p>Item Price: {item.item_price_currency} {item.item_price_quantity}</p>
+        new stuff for location {new_items_of_location.location} <br>
+        which can be found in url {new_items_of_location.url} <br>
         """
+
+        for item in new_items_of_location.items:
+            main_stuff += f"""
+            <br>
+            <p>Item Name: {item.item_name}</p>
+            <p>Item Color: {item.item_color}</p>
+            <p>Item Price: {item.item_price_currency} {item.item_price_quantity}</p>
+            <br>
+            """
 
     to_emails = to_emails or os.getenv("CLIENT_EMAILS").split(",")
 
@@ -43,17 +52,3 @@ def send_email_alert(items: List[Item], to_emails: List[str] = None):
         print(response.status_code)
     except Exception as e:
         raise e
-
-
-if __name__ == "__main__":
-    send_email_alert(
-        items=[
-            Item(
-                item_name="cool name",
-                item_color="red",
-                item_price_quantity="999",
-                item_price_currency="S$",
-            )
-        ],
-        to_emails=["tomxuerjun@gmail.com"],
-    )
