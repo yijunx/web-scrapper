@@ -33,12 +33,14 @@ def scrap(html_path: str, location: str, debug_mode: bool = False):
         if walk_div_maze is None:
             walk_div_maze = default_maze_walker
 
+        divs_passed = []
         for div_name, child_loc in walk_div_maze:
+            divs_passed.append(div_name)
             try:
                 soup = [e for e in soup.children if e.name == div_name][child_loc]
             except Exception as e:
                 print(str(e))
-                print("the elements is...")
+                print(f"we are in div path: {divs_passed}")
                 print([e.name for e in soup.children if e.name is not None])
                 return []
 
