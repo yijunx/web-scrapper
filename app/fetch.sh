@@ -1,4 +1,4 @@
-UA=$(cat ua.txt | gsort -R  | head -1)
+UA=$(cat ua.txt | sort -R  | head -1)
 echo "UA is $UA"
 echo "pulling $SCRAPPING_URL_SG"
 curl $SCRAPPING_URL_SG \
