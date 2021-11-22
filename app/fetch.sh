@@ -1,5 +1,6 @@
-echo "pulling $SCRAPPING_URL_SG"
 UA=$(cat ua.txt | gsort -R  | head -1)
+echo "UA is $UA"
+echo "pulling $SCRAPPING_URL_SG"
 curl $SCRAPPING_URL_SG \
      -H "user-agent: $UA" \
      -H 'accept-language: en-US,en;q=0.9' \
