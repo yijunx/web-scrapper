@@ -51,11 +51,13 @@ def parse_string_into_item(list_item_text: str) -> Item:
         name_part, color_part, price_part = list_item_text.split(", ")
         color = color_part.split(":")[1]
 
-        return Item(
+        item = Item(
             name=name_part.strip(),
             color=color.strip(),
             price=price_part.strip(),
         )
+        # print(item)
+        return item
     except ValueError as e:
         # print(f"THERE IS VALUE ERROR IN PARSING STRING {list_item_text}")
         # print(str(e))
