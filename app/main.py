@@ -96,6 +96,9 @@ def start():
         web_items = scrap(
             html_path=location_info.html_path, location=location_info.location
         )
+        if len(web_items) == 0:
+            # means we are considered bot in this run...
+            continue
         items = [parse_string_into_item(x) for x in web_items]
         lastest_set_of_items_of_location = {}
         for item in items:
