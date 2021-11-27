@@ -40,8 +40,12 @@ def scrap(html_path: str, location: str, debug_mode: bool = False):
                 soup = [e for e in soup.children if e.name == div_name][child_loc]
             except Exception as e:
                 print(str(e))
-                print(f"we are in div path: {divs_passed}")
-                print([e.name for e in soup.children if e.name is not None])
+                print(f"we are in div path: {divs_passed}, trying to get children...")
+                try:
+                    print([x.name for x in soup.children if x.name is not None])
+                except Exception as exc:
+                    print(f"getting children failed with {str(exc)}")
+                    return []
                 return []
 
         # take a peak at next level (NICE!)
